@@ -2,7 +2,12 @@
   <div class="inner">
     <div class="form__wrapper">
       <h2 class="page-heading">新規プロトタイプ投稿</h2>
-        <%# 部分テンプレートでフォームを表示する %>
+      <%= form_with(model: @prototype, local: true) do |form| %>
+        <%= form.text_field :title, placeholder: "Nickname" %>
+        <%= form.text_field :catch_copy, placeholder: "Image Url" %>
+        <%= form.text_area :concept, placeholder: "text", rows: "10" %>
+        <%= form.submit "SEND" %>
+      <% end %>
     </div>
   </div>
 </div>
