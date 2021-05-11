@@ -1,0 +1,2 @@
+module PrototyoeHelper
+end

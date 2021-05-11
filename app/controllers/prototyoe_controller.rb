@@ -1,4 +1,5 @@
-class ProtospaceController < ApplicationController
+class PrototyoeController < ApplicationController
+
   def index
   end
 
