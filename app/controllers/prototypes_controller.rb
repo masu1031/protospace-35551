@@ -1,4 +1,7 @@
 class PrototypesController < ApplicationController
+  before_action :set_prototype, only: [:edit, :show]
+  # before_action :move_to_index, except: [:index, :show, :search]
+
   def index
     @prototypes = Prototype.all
   end
@@ -8,8 +11,8 @@ class PrototypesController < ApplicationController
   end
 
   def create
-    Prototype.create(prototype_params)
-    if Prototype.create
+    @prototype = Prototype.new(prototype_params)
+    if @prototype.save
       redirect_to root_path
     else
       render :new
@@ -17,11 +20,15 @@ class PrototypesController < ApplicationController
   end
 
   def show
-    @prototype = Prototype.find(params[:id])
+    # @prototype = Prototype.find(params[:id])
+    @comment = Comment.new
+    @comments = @prototype.comments.includes(:user)
+    # プロトタイプへ投稿された全てのコメントを取得して、@comments に代入
+    # includes を使って、N+1 問題を解決
   end
   
   def edit
-    @prototype = Prototype.find(params[:id])
+    # @prototype = Prototype.find(params[:id])
   end
   
   def update
@@ -45,5 +52,16 @@ class PrototypesController < ApplicationController
   def prototype_params
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image, :user).merge(user_id: current_user.id)
   end
+
+  def set_prototype
+    @prototype = Prototype.find(params[:id])
+  end
+
+  # def move_to_index
+  #   unless user_signed_in?
+  #     redirect_to action: :index
+  #   end
+  # end
+
 end
 
