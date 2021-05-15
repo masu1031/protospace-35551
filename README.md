@@ -26,7 +26,7 @@
 
 ### Association
 - has_many :comments
-- belongs_to :users
+- belongs_to :user
 
 
 ## comments テーブル
@@ -38,5 +38,5 @@
 | prototype | references | null: false, foreign_key: true |
 
 ### Association
-- belongs_to :users
-- belongs_to :prototypes
+- belongs_to :user
+- belongs_to :prototype
