@@ -6,14 +6,14 @@
       </p>
       <%= link_to "by#{@prototype.user.name}", user_path(@prototype.user), class: :prototype__user %>
 
-      <%# プロトタイプの投稿者とログインしているユーザーが同じであれば以下を表示する %>
       <% if user_signed_in? && current_user.id == @prototype.user_id %>
+        <%# プロトタイプの投稿者とログインしているユーザーが同じであれば以下を表示する %>
         <div class="prototype__manage">
           <%= link_to "編集する", edit_prototype_path(@prototype), class: :prototype__btn %>
           <%= link_to "削除する", prototype_path(@prototype), method: :delete,class: :prototype__btn %>
         </div>
+        <%# // プロトタイプの投稿者とログインしているユーザーが同じであれば上記を表示する %>
       <% end %>
-      <%# // プロトタイプの投稿者とログインしているユーザーが同じであれば上記を表示する %>
       
       <div class="prototype__image">
         <%= image_tag(@prototype.image, class: :card__img ) %>
@@ -36,6 +36,7 @@
       </div>
 
       <div class="prototype__comments">
+
         <% if user_signed_in? %>
           <%# ログインしているユーザーには以下のコメント投稿フォームを表示する %>
           <%= form_with model: [@prototype, @comment], local: true do |f| %>
@@ -47,21 +48,19 @@
               <%= f.submit "送信する", class: :form__btn %>
             </div>
           <% end %> 
-          <%# // ログインしているユーザーには上記を表示する %>
+          <%# // ログインし ているユーザーには上記を表示する %>
         <% end %>
-          <ul class="comments_lists">
-            <%# 投稿に紐づくコメントを一覧する処理を記述する %>
-              <li class="comments_list">
-                <% @comments.each do |comment| %>
-                  <p>
-                    <%= link_to comment.user.name, "/users/#{comment.user_id}", class: :comment_user %>
-                    <%# <%= link_to @comment.user.name, "/users/#{comment.user_id}", class: :comment_user %>
-                    <%= comment.text %>
-                  </p>
-                <% end %>
-              </li>
-            <%# // 投稿に紐づくコメントを一覧する処理を記述する %>
-          </ul>
+
+        <ul class="comments_lists">
+          <% @comments.each do |comment| %>
+            <li class="comments_list">
+              <p>
+                <%= link_to comment.user.name, "/users/#{comment.user_id}", class: :comment_user %>
+                <%= comment.text %>
+              </p>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
